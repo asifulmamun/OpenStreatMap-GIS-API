@@ -10,20 +10,36 @@
         #map { width: 100%; height: 100vh; }
     </style>
 </head>
+
+
 <body>
     <div id="map"></div>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
-        var map = L.map('map').setView([23.8103, 90.4125], 7); // Set your initial coordinates and zoom level here
+        
 
 
+        // Icon
+        var asifulmamunIcon = L.icon({
+            iconUrl: './assets/icons/asifulmamunIcon.jpg',
+            iconSize: [50, 50],
+            iconAnchor: [22, 94],
+            popupAnchor: [0, -76],
+            // shadowUrl: './assets/icons/asifulmamunIcon.jpg',
+            // shadowSize: [68, 95],
+            // shadowAnchor: [22, 94]
+        });
+        
+        var map = L.map('map').setView([23.8103, 90.4125], 10); // Set your initial coordinates and zoom level here
         // Map Credit - Copyright etc
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
 
-        // Replace 'yourGeoJSONData' with your actual GeoJSON data
-        var yourGeoJSONData = {
+
+
+        // Polyggon
+        var polygon = {
             "type": "Feature",
             "properties": {},
             "geometry": {
@@ -36,8 +52,42 @@
                 ],
             }
         };
+        L.geoJSON(polygon).addTo(map)
+        .bindPopup('This is the try 03 by <a title="Go to" target="_blank" href="https://asifulmamun.info.bd">@asifulmamun</a>')
+        .openPopup();;
 
-        L.geoJSON(yourGeoJSONData).addTo(map);
+        // Marker - Default Icon
+        L.marker([23.7570, 90.3655]).addTo(map)
+        .bindPopup('This is the try 02 by <a title="Go to" target="_blank" href="https://asifulmamun.info.bd">@asifulmamun</a>')
+        .openPopup();
+
+        // Marker - Custom Icon
+        L.marker([23.8780, 90.3927], {icon: asifulmamunIcon}).addTo(map)
+        .bindPopup('This is the Try 01 by <a title="Go to" target="_blank" href="https://asifulmamun.info.bd">@asifulmamun</a> ')
+        .openPopup();
+
+
+
+
+
+        // Single Polygon
+        var mohammadpurCoords = [
+            [23.7573, 90.3655], [23.7543, 90.3687], [23.7541, 90.3687], [23.7569, 90.3745]
+        ];
+
+        var uttaraCoords = [
+            [23.8788, 90.3927], [23.8704, 90.4014], [23.8713, 90.4046], [23.8793, 90.3971]
+        ];
+
+        var mohammadpurPolygon = L.polygon(mohammadpurCoords, {color: '#00ffff'}).addTo(map)
+            .bindPopup('This is Land owner is: <a title="Go to" target="_blank" href="https://asifulmamun.info.bd">@asifulmamun</a><br><img width="150" src="./assets/icons/asifulmamunIcon.jpg">');
+
+        L.polygon(uttaraCoords, {color: 'blue'}).addTo(map)
+            .bindPopup('This is Uttara<br><iframe width="560" height="315" src="https://www.youtube.com/embed/lbCQkhPTmr0?si=XHbBKiHyWHwdt2JG&amp" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>');
+
+            
     </script>
+
+    
 </body>
 </html>
